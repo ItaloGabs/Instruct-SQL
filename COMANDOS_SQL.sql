@@ -1,93 +1,93 @@
-CRIANDO UM BANCO DE DADOS
---> CREAT DATABASE NOMEDOBANCO;
-EXCLUINDO BANCO
---> DROP DATABASE NOMEDOBANCO;
+--CRIANDO UM BANCO DE DADOS
+CREAT DATABASE NOMEDOBANCO;
+--EXCLUINDO BANCO
+DROP DATABASE NOMEDOBANCO;
 **COMANDOS**
  --ATENÇÃO--
-Sempre usar o comando em caixa alta e o que estiver sendo filtrado Minusculo 
+--Sempre usar o comando em caixa alta e o que estiver sendo filtrado Minusculo 
 --Operadores SQL--
 ( '=' igual, '>' Maior que, '<' Menor que, '>=' Maior que ou igual, '<=' Menor que ou igual, '<>' Diferente que, 'AND' Operador logico E, 'OR' Operador logico OU)
 SELECT coluna1,coluna2
 FROM tabela;
-(vai filtrar as COLUNAS que estão na TABELA)
+--(vai filtrar as COLUNAS que estão na TABELA)
 SELECT *
 FROM tabela;
-(Mostrar toda tabela sem filtro)
+--(Mostrar toda tabela sem filtro)
 SELECT DISTINCT coluna1
 FROM tabela;
-(Vai filtrar tirando as informações duplicadas)
+--(Vai filtrar tirando as informações duplicadas)
 SELECT * 
 FROM person.Person 
 WHERE LastName = 'miller' and FirstName = 'anna';
-(filtrou a tabela de acordo com a informação especifica da coluna)
+--(filtrou a tabela de acordo com a informação especifica da coluna)
 SELECT * 
 FROM production.product 
 WHERE color = 'blue' or color = 'black';
-(filtrou a tabela de acordo com a informação especifica da coluna)
+--(filtrou a tabela de acordo com a informação especifica da coluna)
 SELECT * 
 FROM Production.Product 
 WHERE ListPrice > 1500 and ListPrice < 2500;
-(Comparação de preço usando Operadores logicos)
+--(Comparação de preço usando Operadores logicos)
 SELECT name 
 FROM Production.Product 
 WHERE ListPrice > 500 and ListPrice < 700;
-(Comparação de preço usando Operadores logicos mas retornando somente os nomes dentro desse filtro)
+--(Comparação de preço usando Operadores logicos mas retornando somente os nomes dentro desse filtro)
 SELECT * 
 FROM Production.Product 
 WHERE color <> 'red';
-(Mostra todas as cores excerto o VERMELHO)
+--(Mostra todas as cores excerto o VERMELHO)
 SELECT COUNT(*)
 FROM Person.Person
-(Quantidade de pessoas na tabela em geral junto com duplicadas)
+--(Quantidade de pessoas na tabela em geral junto com duplicadas)
 SELECT COUNT(Title)
 FROM Person.Person
-(Quantidade de titulos junto com os duplicadas)
+--(Quantidade de titulos junto com os duplicadas)
 SELECT COUNT(DISTINCT Title)
 FROM Person.Person
-(Quantidade de titulos junto sem os duplicadas)
+--(Quantidade de titulos junto sem os duplicadas)
 SELECT TOP 10 *
 FROM tabela
-(Escolha a Quantidade de linhas com as informações)
+--(Escolha a Quantidade de linhas com as informações)
 SELECT FirstName,LastName
 FROM Person.Person
 ORDER BY FirstName asc, LastName desc;
-(Ordem crescente ASC e descrescente DESC)
+--(Ordem crescente ASC e descrescente DESC)
 SELECT TOP 10 ProductID, ListPrice
 FROM Production.Product
 ORDER BY ListPrice desc;
-(Mostra 10 linhas na ordem descrescente da lista de valores e mostra o ID dos product)
+--(Mostra 10 linhas na ordem descrescente da lista de valores e mostra o ID dos product)
 SELECT ListPrice
 FROM Production.Product
 WHERE ListPrice between 1000 and 1500
 ORDER BY ListPrice desc;
-(Vai mostrar os valores entre 1000 e 1500 na pratica seria valor >= minimo and valor <= maximo)
+--(Vai mostrar os valores entre 1000 e 1500 na pratica seria valor >= minimo and valor <= maximo)
 SELECT ListPrice
 FROM Production.Product
 WHERE ListPrice not between 1000 and 1500
 ORDER BY ListPrice desc;
-(vai mostrar todos os valores sem o 1000 ate 1500)
-Usamos o IN junto com WHERE para verificar se um valor correspondem com qualquer valor passado na lista de valores
+--(vai mostrar todos os valores sem o 1000 ate 1500)
+--Usamos o IN junto com WHERE para verificar se um valor correspondem com qualquer valor passado na lista de valores
 SELECT *
 FROM tabela
 WHERE coluna1 IN (2,7,13);
-Vamos dizer que voce não sabe o nome da pessoa e so ouviu o inicio do nome mas precisamos procurar o nome na lista, nisso usamos o LIKE
+--Vamos dizer que voce não sabe o nome da pessoa e so ouviu o inicio do nome mas precisamos procurar o nome na lista, nisso usamos o LIKE
 SELECT *
 FROM person.person
 WHERE FirstName like 'ovi%';
-(ovi% - inicio do nome, %ovi - final do nome, %ovi% - nao sabe se é no inicio, meio ou fim do nome, %ro_ - vai fzr o query pela letra)
+--(ovi% - inicio do nome, %ovi - final do nome, %ovi% - nao sabe se é no inicio, meio ou fim do nome, %ro_ - vai fzr o query pela letra)
 
 SELECT TOP 10 SUM(Linetotal)
 FROM Sales.SalesOrderDetail
-(SUM-soma, Vai somar as 10 linhas)
+--(SUM-soma, Vai somar as 10 linhas)
 SELECT TOP 10 MIN(Linetotal)
 FROM Sales.SalesOrderDetail
-(MIN-Minimo, Vai mostrar o menor valor ou valor minimo)
+--(MIN-Minimo, Vai mostrar o menor valor ou valor minimo)
 SELECT TOP 10 MAX(Linetotal)
 FROM Sales.SalesOrderDetail
-(MAX-maximo, vai mostrar o valor maximo)
+--(MAX-maximo, vai mostrar o valor maximo)
 SELECT TOP 10 AVG(Linetotal)
 FROM Sales.SalesOrderDetail
-(AVG-media, vai mostrar a media)
+--(AVG-media, vai mostrar a media)
 --------------usando GROUP BY-----------------------
 SELECT coluna1,funçãodeagregação(coluna2)
 FROM tabela
@@ -104,45 +104,45 @@ WHERE SpecialOfferID = '9'
 SELECT SpecialOfferID,SUM(unitprice) AS "soma"
 FROM Sales.SalesOrderDetail
 GROUP BY SpecialOfferID
-(Bem mais otimizado)
+--(Bem mais otimizado)
 EX - 3
 SELECT color, AVG(ListPrice)
 FROM Production.Product
 WHERE Color = 'silver'
 GROUP BY Color
-(media de preço de produtos com a cor silver)
+--(media de preço de produtos com a cor silver)
 -------------------HAVING-----------------------
-A grande diferença entre having e WHERE é que o GROUP BY é aplicado depois que os dados ja foram agrupados, enquanto o WHERE é aplicado antes dos dados serem agrupados.
+--A grande diferença entre having e WHERE é que o GROUP BY é aplicado depois que os dados ja foram agrupados, enquanto o WHERE é aplicado antes dos dados serem agrupados.
 SELECT FirstName, COUNT(FirstName)
 FROM Person.Person
 GROUP BY FirstName
 HAVING COUNT(firstname) > 10
-(vai mostrar o nome e a Quantidade de vezes que esse nome aparece mais que 10 vezes)
+--(vai mostrar o nome e a Quantidade de vezes que esse nome aparece mais que 10 vezes)
 SELECT FirstName, COUNT(FirstName)
 FROM Person.Person
 WHERE title = 'mr.'
 GROUP BY FirstName
 HAVING COUNT(FirstName) > 10
-(usando o HAVING e o WHERE junto)
+--(usando o HAVING e o WHERE junto)
 SELECT ProductID, SUM(LineTotal) AS "total"
 FROM Sales.SalesOrderDetail
 GROUP BY ProductID
 HAVING SUM(linetotal) BETWEEN 162000 AND 500000
-(Mostrando os produtos com valores entre 162k a 500k)
+--(Mostrando os produtos com valores entre 162k a 500k)
 ------------------------AS--------------------------
 SELECT TOP 10 SUM(Linetotal) AS "soma" - vai dar o nome da coluna que irar aparecer as 10 linhas
 FROM Sales.SalesOrderDetail
 SELECT TOP 10 FirstName AS "primeiro nome", LastName AS "Sobrenome" - mudando nome da coluna ja existente
 FROM Person.Person
-OBS: Se colocar apenas uma palavra não necessita de ASPAS, caso ao contrario coloque as ASPAS
+--OBS: Se colocar apenas uma palavra não necessita de ASPAS, caso ao contrario coloque as ASPAS
 -----------------------JOINS---------------------
-Existe 3 tipos de joins: Inner join, Outer join e Self-join
+--Existe 3 tipos de joins: Inner join, Outer join e Self-join
 INNER JOIN:
 EX 1:
 SELECT P.BusinessEntityID,P.FirstName,P.LastName,PE.EmailAddress
 FROM Person.Person AS P
 INNER JOIN Person.EmailAddress AS PE ON P.BusinessEntityID = PE.BusinessEntityID
-(Temos que achar uma coluna em comum com as duas tabelas, nisso criamos apelidos para as duas tabelas igual no person.person que é P e no person.emailaddress é PE e colocar seus apelido em suas devidas colunas, depois disso inserir o INNER JOIN com a tabela de fora junto com a coluna semelhante)
+--(Temos que achar uma coluna em comum com as duas tabelas, nisso criamos apelidos para as duas tabelas igual no person.person que é P e no person.emailaddress é PE e colocar seus apelido em suas devidas colunas, depois disso inserir o INNER JOIN com a tabela de fora junto com a coluna semelhante)
 EX 2:
 SELECT PR.ListPrice, PR.Name,PC.Name
 FROM Production.Product AS PR
@@ -151,7 +151,7 @@ EX 3:
 SELECT TOP 10 *
 FROM Person.BusinessEntityAddress BA
 INNER JOIN Person.Address AS PA ON PA.AddressID = BA.AddressID
-(Mesclou as Tabelas e as colunas)
+--(Mesclou as Tabelas e as colunas)
 -----------------------------------SELF JOIN-------------------------------
 --SELECT A.NOME_COLUNA
 --FROM TABELA A
@@ -168,7 +168,7 @@ SELECT *
 FROM Person.StateProvince SP
 LEFT JOIN Person.Address AS PA ON SP.StateProvinceID = PA.StateProvinceID
 WHERE PA.StateProvinceID IS NULL
-(Ele mescla as colunas - As colunas tem que ser as mesmas nas duas tabelas porem no WHERE pode colocar coluna que não esta presente no SELECT mas tem que existi na tabela, E ja remove as duplicadas)
+--(Ele mescla as colunas - As colunas tem que ser as mesmas nas duas tabelas porem no WHERE pode colocar coluna que não esta presente no SELECT mas tem que existi na tabela, E ja remove as duplicadas)
 SELECT PR.ListPrice, PR.Name,PC.Name
 FROM Production.Product AS PR
 FULL OUTER JOIN Production.ProductSubcategory AS PC on PR.ProductSubcategoryID = PC.ProductSubcategoryID
@@ -181,7 +181,7 @@ UNION
 SELECT ProductID,Name,ProductNumber
 FROM Production.Product
 WHERE Color = 'black'
-(Ele mescla as colunas - As colunas tem que ser as mesmas nas duas tabelas porem no WHERE pode colocar coluna que não esta presente no SELECT mas tem que existi na tabela, E ja remove as duplicadas)
+--(Ele mescla as colunas - As colunas tem que ser as mesmas nas duas tabelas porem no WHERE pode colocar coluna que não esta presente no SELECT mas tem que existi na tabela, E ja remove as duplicadas)
 EX 2:
 SELECT FirstName,Title,MiddleName
 FROM Person.Person
@@ -198,9 +198,9 @@ UNION ALL
 SELECT FirstName,Title,MiddleName
 FROM Person.Person
 WHERE MiddleName = 'A'
-(Usa o UNION ALL Para Entrar todas as informações ate mesmo as duplicadas)
+--(Usa o UNION ALL Para Entrar todas as informações ate mesmo as duplicadas)
 --------------------DATEPART---------------------------
-(manipulação de data, para mais informações consultar a documentação DATEPART)
+--(manipulação de data, para mais informações consultar a documentação DATEPART)
 SELECT AVG(TotalDue) AS Media, DATEPART(YEAR, OrderDate) AS Ano
 FROM Sales.SalesOrderHeader
 GROUP BY DATEPART(YEAR,OrderDate)
@@ -218,23 +218,23 @@ ORDER BY Dia
 --------------------manipulação com string------------------------
 SELECT FirstName, LastName,CONCAT(FirstName,' ',LastName)AS 'Com espaço',CONCAT(FirstName,LastName)AS 'sem espaço'
 FROM Person.Person
-(Usamos o CONCAT para juntar as strings)
+--(Usamos o CONCAT para juntar as strings)
 
-(Vai deixar a coluna Maiuscula(UPPER) e a outra Minuscula(LOWER))
+--(Vai deixar a coluna Maiuscula(UPPER) e a outra Minuscula(LOWER))
 SELECT UPPER(FirstName), LOWER(FirstName)
 FROM Person.Person
 
 SELECT FirstName,LEN(FirstName)
 FROM Person.Person
-(Vai contar a quantidade de letras da string usando o LEN)
+--(Vai contar a quantidade de letras da string usando o LEN)
 
 SELECT FirstName ,SUBSTRING(FirstName,1,3)
 FROM Person.Person
-(Usando o SUBSTRING quero que do Indice 1 conte 3 letras, vai contar da primeira letra ate a terceira, se substituir o 1 por 2 vai contar do 2 ate a 3 letra)
+--(Usando o SUBSTRING quero que do Indice 1 conte 3 letras, vai contar da primeira letra ate a terceira, se substituir o 1 por 2 vai contar do 2 ate a 3 letra)
 
 SELECT ProductNumber ,REPLACE(ProductNumber,'-','alterado')
 FROM Production.Product
-(usamos o REPLACE para substituir alguma informação da coluna,'-'selecionei o que queria alterar,'alterado'coloquei o conteudo que queria que fosse inserido)
+--(usamos o REPLACE para substituir alguma informação da coluna,'-'selecionei o que queria alterar,'alterado'coloquei o conteudo que queria que fosse inserido)
 -----------------------Operações mat-------------------------------
 SELECT UnitPrice * LineTotal
 FROM Sales.SalesOrderDetail
@@ -259,20 +259,20 @@ FROM Sales.SalesOrderDetail
 
 SELECT ROUND(LineTotal,2),LineTotal
 FROM Sales.SalesOrderDetail
-(Para arredondar usamos o ROUND e dentro do round colocamos a precisão decima que vamos fazer o arredondamento)
+--(Para arredondar usamos o ROUND e dentro do round colocamos a precisão decima que vamos fazer o arredondamento)
 
 SELECT SQRT(LineTotal),LineTotal
 FROM Sales.SalesOrderDetail
-(SQRT usamos para ver a raiz quadrada)
+--(SQRT usamos para ver a raiz quadrada)
 --------------------------SUBQUERY----------------------------
-MODO MANUAL:
+--MODO MANUAL:
 --Monte um relatorio para mim de todos os produtos cadastrados que tem preço de venda acima de media
 --SELECT AVG(LISTPRICE)
 --FROM Production.Product
 --SELECT *
 --FROM Production.Product
 --WHERE ListPrice > 438.66
-MODO USANDO SUBQUERY:
+--MODO USANDO SUBQUERY:
 SELECT *
 FROM Production.Product
 WHERE ListPrice > (SELECT AVG(LISTPRICE) FROM Production.Product)
